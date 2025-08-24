@@ -1,7 +1,7 @@
 package lagz.bedrock_cauldrons.common.block.entity;
 
-import lagz.bedrock_cauldrons.common.block.DyeCauldronBlock;
 import lagz.bedrock_cauldrons.core.registry.BCBlockEntityTypes;
+import lagz.bedrock_cauldrons.core.util.ColorUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -50,6 +50,18 @@ public class DyeCauldronBlockEntity extends BlockEntity {
     }
     
     public void setColorFromDye(DyeItem dyeitem) {
-        this.setColor(DyeCauldronBlock.getDyeColor(dyeitem));
+        this.setColor(ColorUtil.getDyeColor(dyeitem));
+    }
+    
+    public void mixColor(int color) {
+        this.setColor(ColorUtil.averageIntColors(this.color, color));
+    }
+    
+    public void mixDye(DyeItem dyeitem) {
+        this.mixColor(ColorUtil.getDyeColor(dyeitem));
+    }
+    
+    public boolean isDyeColor(DyeItem dyeitem) {
+        return ColorUtil.getDyeColor(dyeitem) == this.color;
     }
 }

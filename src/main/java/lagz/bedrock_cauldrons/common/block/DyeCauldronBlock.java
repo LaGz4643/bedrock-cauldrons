@@ -4,7 +4,6 @@ import lagz.bedrock_cauldrons.common.block.entity.DyeCauldronBlockEntity;
 import lagz.bedrock_cauldrons.core.other.BCCauldronInteractions;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,14 +29,5 @@ public class DyeCauldronBlock extends BedrockCauldronBlock {
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockpos, BlockState blockstate) {
         return new DyeCauldronBlockEntity(blockpos, blockstate);
-    }
-    
-    public static int getDyeColor(DyeItem dyeitem) {
-        float[] colors = dyeitem.getDyeColor().getTextureDiffuseColors();
-        int r = (int) (colors[0] * 255.0F);
-        int g = (int) (colors[1] * 255.0F);
-        int b = (int) (colors[2] * 255.0F);
-        int color = (r << 8) + g;
-        return (color << 8) + b;
     }
 }

@@ -1,6 +1,5 @@
 package lagz.bedrock_cauldrons.core.other;
 
-import lagz.bedrock_cauldrons.common.block.DyeCauldronBlock;
 import lagz.bedrock_cauldrons.common.block.entity.DyeCauldronBlockEntity;
 import lagz.bedrock_cauldrons.common.block.entity.PotionCauldronBlockEntity;
 import lagz.bedrock_cauldrons.core.registry.BCBlocks;
@@ -201,13 +200,13 @@ public class BCCauldronInteractions {
     public static final CauldronInteraction MIX_DYE = (state, level, pos, player, hand, stack) -> {
         Item item = stack.getItem();
         if (item instanceof DyeItem dyeitem) {
-            if (level.getBlockEntity(pos) instanceof DyeCauldronBlockEntity entity && DyeCauldronBlock.getDyeColor(dyeitem) != entity.getColor()) {
+            if (level.getBlockEntity(pos) instanceof DyeCauldronBlockEntity entity && !entity.isDyeColor(dyeitem)) {
                 if (!level.isClientSide) {
                     stack.shrink(1);
                     player.awardStat(Stats.USE_CAULDRON);
                     player.awardStat(Stats.ITEM_USED.get(item));
                     
-                    entity.setColorFromDye(dyeitem);
+                    entity.mixDye(dyeitem);
                     
                     level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
                     level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
