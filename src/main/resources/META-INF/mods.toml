@@ -3,33 +3,31 @@ loaderVersion="[47,)"
 license="All rights reserved"
 
 [[mods]]
-    modId="examplemod"
+    modId="bedrock_cauldrons"
     version="${file.jarVersion}"
     logoFile="logo.png"
-    itemIcon = "minecraft:dirt"
+    itemIcon = "minecraft:cauldron"
     configBackground = "minecraft:textures/block/dirt.png"
-    authors="LaGz4643"
+    authors="LaGz"
     credits=""
-    #displayTest="IGNORE_SERVER_VERSION" - server side only mod
-    #displayTest="IGNORE_ALL_VERSION" - client side only mod - delete both for normal content mod
-    displayName="Example Mod"
-    description='''Example Description.'''
+    displayName="Bedrock Cauldrons"
+    description='''Adds potion and dye cauldrons from Minecraft: Bedrock Edition.'''
 
-[[dependencies.examplemod]]
+[[dependencies.bedrock_cauldrons]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.20.1,1.20.2)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.examplemod]]
+[[dependencies.bedrock_cauldrons]]
     modId="forge"
     mandatory=true
     versionRange="[47,)"
     ordering="NONE"
     side="BOTH"
 
-#[[dependencies.examplemod]]
+#[[dependencies.bedrock_cauldrons]]
 #    modId="exampledependency"
 #    mandatory=true
 #    versionRange="[minversion,)"

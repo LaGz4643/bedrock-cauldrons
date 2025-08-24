@@ -1,12 +1,14 @@
 {
   "required": true,
-  "package": "com.lagz.examplemod.core.mixin",
+  "package": "lagz.bedrock_cauldrons.core.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
-  "refmap": "examplemod.refmap.json",
+  "refmap": "bedrock_cauldrons.refmap.json",
   "mixins": [
+    "SwampHutPieceMixin"
   ],
   "client": [
+    "TerrainParticleMixin"
   ],
   "server": [
   ],

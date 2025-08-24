@@ -19,7 +19,7 @@ mixin {
 }
 
 version = "${project.minecraft}-${project.modVersion}"
-group = "com.lagz"
+group = "lagz"
 archivesBaseName = project.modId
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -36,7 +36,7 @@ minecraft {
             property "mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg"
             arg "-mixin.config=" + project.modId + ".mixins.json"
             mods {
-                examplemod {
+                bedrock_cauldrons {
                     source sourceSets.main
                 }
             }
@@ -50,7 +50,7 @@ minecraft {
             property "mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg"
             arg "-mixin.config=" + project.modId + ".mixins.json"
             mods {
-                examplemod {
+                bedrock_cauldrons {
                     source sourceSets.main
                 }
             }
@@ -64,7 +64,7 @@ minecraft {
             property "mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg"
             arg "-mixin.config=" + project.modId + ".mixins.json"
             mods {
-                examplemod {
+                bedrock_cauldrons {
                     source sourceSets.main
                 }
             }

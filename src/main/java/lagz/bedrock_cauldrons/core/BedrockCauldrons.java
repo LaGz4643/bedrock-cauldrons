@@ -1,7 +1,8 @@
-package com.lagz.examplemod.core;
+package lagz.bedrock_cauldrons.core;
 
-import com.lagz.examplemod.core.registry.EMBlocks;
-import com.lagz.examplemod.core.registry.EMItems;
+import lagz.bedrock_cauldrons.core.other.BCCauldronInteractions;
+import lagz.bedrock_cauldrons.core.registry.BCBlockEntityTypes;
+import lagz.bedrock_cauldrons.core.registry.BCBlocks;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -9,16 +10,16 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod(ExampleMod.MOD_ID)
-public class ExampleMod {
-    public static final String MOD_ID = "examplemod";
+@Mod(BedrockCauldrons.MOD_ID)
+public class BedrockCauldrons {
+    public static final String MOD_ID = "bedrock_cauldrons";
 //    private static final Logger LOGGER = LogUtils.getLogger();
 
-    public ExampleMod() {
+    public BedrockCauldrons() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        EMBlocks.BLOCKS.register(modEventBus);
-        EMItems.ITEMS.register(modEventBus);
+        BCBlocks.BLOCKS.register(modEventBus);
+        BCBlockEntityTypes.BLOCK_ENTITY_TYPES.register(modEventBus);
 
 //        MinecraftForge.EVENT_BUS.register(this);
 
@@ -29,13 +30,13 @@ public class ExampleMod {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-
+            BCCauldronInteractions.registerCauldronInteractions();
         });
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-
+//            ItemBlockRenderTypes.setRenderLayer(Blocks.WATER_CAULDRON, RenderType.tripwire());
         });
     }
 
