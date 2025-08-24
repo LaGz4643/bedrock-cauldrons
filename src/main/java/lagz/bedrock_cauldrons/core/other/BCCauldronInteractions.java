@@ -88,7 +88,7 @@ public class BCCauldronInteractions {
                 int waterLevel = state.getValue(LayeredCauldronBlock.LEVEL);
                 level.setBlockAndUpdate(pos, BCBlocks.DYE_CAULDRON.get().defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, waterLevel));
                 if (level.getBlockEntity(pos) instanceof DyeCauldronBlockEntity entity) {
-                    entity.setColor(DyeCauldronBlock.getDyeColor(dyeitem));
+                    entity.setColorFromDye(dyeitem);
                 }
                 
                 level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -201,14 +201,13 @@ public class BCCauldronInteractions {
     public static final CauldronInteraction MIX_DYE = (state, level, pos, player, hand, stack) -> {
         Item item = stack.getItem();
         if (item instanceof DyeItem dyeitem) {
-            int color = DyeCauldronBlock.getDyeColor(dyeitem);
-            if (level.getBlockEntity(pos) instanceof DyeCauldronBlockEntity entity && color != entity.getColor()) {
+            if (level.getBlockEntity(pos) instanceof DyeCauldronBlockEntity entity && DyeCauldronBlock.getDyeColor(dyeitem) != entity.getColor()) {
                 if (!level.isClientSide) {
                     stack.shrink(1);
                     player.awardStat(Stats.USE_CAULDRON);
                     player.awardStat(Stats.ITEM_USED.get(item));
                     
-                    entity.setColor(color);
+                    entity.setColorFromDye(dyeitem);
                     
                     level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
                     level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);

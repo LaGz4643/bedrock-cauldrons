@@ -1,9 +1,11 @@
 package lagz.bedrock_cauldrons.common.block.entity;
 
+import lagz.bedrock_cauldrons.common.block.DyeCauldronBlock;
 import lagz.bedrock_cauldrons.core.registry.BCBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -45,5 +47,9 @@ public class DyeCauldronBlockEntity extends BlockEntity {
         this.color = color;
         this.setChanged();
         this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
+    }
+    
+    public void setColorFromDye(DyeItem dyeitem) {
+        this.setColor(DyeCauldronBlock.getDyeColor(dyeitem));
     }
 }
