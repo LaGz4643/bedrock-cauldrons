@@ -4,6 +4,7 @@ import lagz.bedrock_cauldrons.core.registry.BCBlockEntityTypes;
 import lagz.bedrock_cauldrons.core.util.ColorUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.level.block.Block;
@@ -46,7 +47,6 @@ public class DyeCauldronBlockEntity extends BlockEntity {
     public void setColor(int color) {
         this.color = color;
         this.setChanged();
-        this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
     }
     
     public void setColorFromDye(DyeItem dyeitem) {
@@ -63,5 +63,13 @@ public class DyeCauldronBlockEntity extends BlockEntity {
     
     public boolean isDyeColor(DyeItem dyeitem) {
         return ColorUtil.getDyeColor(dyeitem) == this.color;
+    }
+    
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        super.onDataPacket(net, pkt);
+        if (this.getLevel().isClientSide) {
+            this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_CLIENTS);
+        }
     }
 }
