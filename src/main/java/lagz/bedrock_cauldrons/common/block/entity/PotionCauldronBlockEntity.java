@@ -1,6 +1,5 @@
 package lagz.bedrock_cauldrons.common.block.entity;
 
-import lagz.bedrock_cauldrons.common.block.PotionCauldronBlock;
 import lagz.bedrock_cauldrons.core.registry.BCBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -63,10 +62,6 @@ public class PotionCauldronBlockEntity extends BlockEntity {
     public void initPotionStack(ItemStack stack) {
         this.potionStack = stack.copyWithCount(1);
         this.setChanged();
-        this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), PotionCauldronBlock.UPDATE_MOVE_BY_PISTON);
-//        BlockState state = this.getBlockState();
-//        this.level.setBlockAndUpdate(this.getBlockPos(), state.cycle(LayeredCauldronBlock.LEVEL));
-//        this.level.setBlockAndUpdate(this.getBlockPos(), state);
     }
     
     public void initRandomPotionStack(RandomSource random) {

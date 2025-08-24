@@ -10,6 +10,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -42,5 +43,9 @@ public abstract class BedrockCauldronBlock extends LayeredCauldronBlock implemen
                 return false;
             }
         });
+    }
+    
+    public static double getCauldronContentHeight(BlockState blockstate) {
+        return blockstate.is(Blocks.CAULDRON) ? 4.0D / 16.0D : (6.0D + blockstate.getValue(LEVEL) * 3.0D) / 16.0D;
     }
 }

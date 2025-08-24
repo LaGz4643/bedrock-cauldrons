@@ -8,6 +8,14 @@ public class ColorUtil {
         return floatColorToIntColor(dyeitem.getDyeColor().getTextureDiffuseColors());
     }
     
+    public static float[] intColorToFloatColor(int color) {
+        float[] floatColor = new float[3];
+        floatColor[0] = ((color & 16711680) >> 16) / 255.0F;
+        floatColor[1] = ((color & '\uff00') >> 8) / 255.0F;
+        floatColor[2] = ((color & 255) >> 0) / 255.0F;
+        return floatColor;
+    }
+    
     public static int floatColorToIntColor(float[] color) {
         int r = (int) (color[0] * 255.0F);
         int g = (int) (color[1] * 255.0F);

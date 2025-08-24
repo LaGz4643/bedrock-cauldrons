@@ -1,5 +1,6 @@
 package lagz.bedrock_cauldrons.core;
 
+import lagz.bedrock_cauldrons.core.networking.BCNetworking;
 import lagz.bedrock_cauldrons.core.other.BCCauldronInteractions;
 import lagz.bedrock_cauldrons.core.registry.BCBlockEntityTypes;
 import lagz.bedrock_cauldrons.core.registry.BCBlocks;
@@ -20,6 +21,8 @@ public class BedrockCauldrons {
 
         BCBlocks.BLOCKS.register(modEventBus);
         BCBlockEntityTypes.BLOCK_ENTITY_TYPES.register(modEventBus);
+        
+        BCNetworking.registerMessages();
 
 //        MinecraftForge.EVENT_BUS.register(this);
 

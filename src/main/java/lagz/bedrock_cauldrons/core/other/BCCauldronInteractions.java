@@ -1,7 +1,9 @@
 package lagz.bedrock_cauldrons.core.other;
 
+import lagz.bedrock_cauldrons.common.block.BedrockCauldronBlock;
 import lagz.bedrock_cauldrons.common.block.entity.DyeCauldronBlockEntity;
 import lagz.bedrock_cauldrons.common.block.entity.PotionCauldronBlockEntity;
+import lagz.bedrock_cauldrons.core.networking.BCNetworking;
 import lagz.bedrock_cauldrons.core.registry.BCBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -19,6 +21,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -56,9 +59,13 @@ public class BCCauldronInteractions {
     public static final CauldronInteraction EMPTY_FILL_POTION = (state, level, pos, player, hand, stack) -> {
         if (!level.isClientSide) {
             Item item = stack.getItem();
-            level.setBlockAndUpdate(pos, BCBlocks.POTION_CAULDRON.get().defaultBlockState());
+            BlockState placeBlockState = BCBlocks.POTION_CAULDRON.get().defaultBlockState();
+            level.setBlockAndUpdate(pos, placeBlockState);
             if (level.getBlockEntity(pos) instanceof PotionCauldronBlockEntity entity) {
                 entity.initPotionStack(stack);
+                if (entity.getPotion() != Potions.WATER) {
+                    BCNetworking.sendAddPotionCauldronInteractParticlesMessage(pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(placeBlockState));
+                }
             }
             player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
             player.awardStat(Stats.USE_CAULDRON);
@@ -160,9 +167,13 @@ public class BCCauldronInteractions {
                     player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
                     player.awardStat(Stats.USE_CAULDRON);
                     player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-                    level.setBlockAndUpdate(pos, state.cycle(LayeredCauldronBlock.LEVEL));
+                    BlockState placeBlockState = state.cycle(LayeredCauldronBlock.LEVEL);
+                    level.setBlockAndUpdate(pos, placeBlockState);
                     level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                     level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
+                    if (entity.getPotion() != Potions.WATER) {
+                        BCNetworking.sendAddPotionCauldronInteractParticlesMessage(pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(placeBlockState));
+                    }
                 }
                 
                 return InteractionResult.sidedSuccess(level.isClientSide);
@@ -185,6 +196,9 @@ public class BCCauldronInteractions {
                     LayeredCauldronBlock.lowerFillLevel(state, level, pos);
                     level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                     level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
+                    if (entity.getPotion() != Potions.WATER) {
+                        BCNetworking.sendAddPotionCauldronInteractParticlesMessage(pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(level.getBlockState(pos)));
+                    }
                 }
                 
                 return InteractionResult.sidedSuccess(level.isClientSide);
