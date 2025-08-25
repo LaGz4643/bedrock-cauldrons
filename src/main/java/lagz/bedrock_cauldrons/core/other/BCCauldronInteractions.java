@@ -64,7 +64,7 @@ public class BCCauldronInteractions {
             if (level.getBlockEntity(pos) instanceof PotionCauldronBlockEntity entity) {
                 entity.initPotionStack(stack);
                 if (entity.getPotion() != Potions.WATER) {
-                    BCNetworking.sendAddPotionCauldronInteractParticlesMessage(pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(placeBlockState));
+                    BCNetworking.sendAddPotionCauldronInteractParticlesMessage(level, pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(placeBlockState));
                 }
             }
             player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
@@ -172,7 +172,7 @@ public class BCCauldronInteractions {
                     level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                     level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
                     if (entity.getPotion() != Potions.WATER) {
-                        BCNetworking.sendAddPotionCauldronInteractParticlesMessage(pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(placeBlockState));
+                        BCNetworking.sendAddPotionCauldronInteractParticlesMessage(level, pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(placeBlockState));
                     }
                 }
                 
@@ -197,7 +197,7 @@ public class BCCauldronInteractions {
                     level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                     level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
                     if (entity.getPotion() != Potions.WATER) {
-                        BCNetworking.sendAddPotionCauldronInteractParticlesMessage(pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(level.getBlockState(pos)));
+                        BCNetworking.sendAddPotionCauldronInteractParticlesMessage(level, pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(level.getBlockState(pos)));
                     }
                 }
                 
