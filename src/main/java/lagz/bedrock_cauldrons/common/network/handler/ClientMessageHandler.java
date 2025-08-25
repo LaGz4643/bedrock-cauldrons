@@ -15,8 +15,8 @@ public class ClientMessageHandler {
         BlockPos blockpos = message.getBlockPos();
         
         float[] color = ColorUtil.intColorToFloatColor(message.getPotionColor());
-        for (int i = 0; i < 8; i++) {
-            level.addParticle(ParticleTypes.ENTITY_EFFECT, blockpos.getX() + 0.5D, blockpos.getY() + message.getContentHeight() + 2.0D / 16.0D, blockpos.getZ() + 0.5D, color[0], color[1], color[2]);
+        for (int i = 0; i < 5; i++) {
+            level.addParticle(ParticleTypes.ENTITY_EFFECT, blockpos.getX() + 0.5D + (level.getRandom().nextDouble() - 0.5D) * 5.0D / 8.0D, blockpos.getY() + message.getContentHeight() + 2.0D / 16.0D, blockpos.getZ() + 0.5D + (level.getRandom().nextDouble() - 0.5D) * 5.0D / 8.0D, color[0], color[1], color[2]);
         }
     }
 }
