@@ -87,7 +87,9 @@ public class BCCauldronInteractions {
         Item item = stack.getItem();
         if (item instanceof DyeItem dyeitem) {
             if (!level.isClientSide) {
-                stack.shrink(1);
+                if (!player.getAbilities().instabuild) {
+                    stack.shrink(1);
+                }
                 player.awardStat(Stats.USE_CAULDRON);
                 player.awardStat(Stats.ITEM_USED.get(item));
                 
@@ -216,7 +218,9 @@ public class BCCauldronInteractions {
         if (item instanceof DyeItem dyeitem) {
             if (level.getBlockEntity(pos) instanceof DyeCauldronBlockEntity entity && !entity.isDyeColor(dyeitem)) {
                 if (!level.isClientSide) {
-                    stack.shrink(1);
+                    if (!player.getAbilities().instabuild) {
+                        stack.shrink(1);
+                    }
                     player.awardStat(Stats.USE_CAULDRON);
                     player.awardStat(Stats.ITEM_USED.get(item));
                     
