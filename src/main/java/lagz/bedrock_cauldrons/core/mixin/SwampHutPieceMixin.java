@@ -53,7 +53,7 @@ public abstract class SwampHutPieceMixin extends ScatteredFeaturePiece {
             if (boundingbox.isInside(blockpos) && !level.getBlockState(blockpos).is(BCBlocks.POTION_CAULDRON.get())) {
                 this.placeBlock(level, BCBlocks.POTION_CAULDRON.get().defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, randomsource.nextInt(1, 4)), 4, 2, 6, boundingbox);
                 if (level.getBlockEntity(blockpos) instanceof PotionCauldronBlockEntity entity) {
-                    entity.initRandomPotionStack(randomsource);
+                    entity.initRandomSwampHutPotionStack(randomsource);
                 }
                 this.bedrock_cauldrons$placedCauldron = true;
             }

@@ -70,7 +70,7 @@ public class PotionCauldronBlockEntity extends BlockEntity {
         this.setPotionStack(stack.copyWithCount(1));
     }
     
-    public void initRandomPotionStack(RandomSource random) {
+    public void initRandomSwampHutPotionStack(RandomSource random) {
         this.setPotionStack(createRandomSwampHutPotionStack(random));
     }
     
