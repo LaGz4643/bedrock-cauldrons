@@ -55,6 +55,7 @@ public class DyeCauldronBlockEntity extends BlockEntity {
     
     public void mixColor(int color) {
         this.setColor(ColorUtil.averageIntColors(this.color, color));
+        this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_CLIENTS);
     }
     
     public void mixDye(DyeItem dyeitem) {
