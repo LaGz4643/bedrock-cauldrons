@@ -61,12 +61,24 @@ public class PotionCauldronBlockEntity extends BlockEntity {
         return PotionUtils.getColor(this.potionStack);
     }
     
-    public void initPotionStack(ItemStack stack) {
-        this.potionStack = stack.copyWithCount(1);
+    private void setPotionStack(ItemStack stack) {
+        this.potionStack = stack;
         this.setChanged();
     }
     
+    public void initPotionStack(ItemStack stack) {
+        this.setPotionStack(stack.copyWithCount(1));
+    }
+    
     public void initRandomPotionStack(RandomSource random) {
+        this.setPotionStack(createRandomSwampHutPotionStack(random));
+    }
+    
+    public ItemStack createPickupStack() {
+        return this.potionStack.copyWithCount(1);
+    }
+    
+    public static ItemStack createRandomSwampHutPotionStack(RandomSource random) {
         Item item = random.nextInt(2) == 0 ? Items.POTION : Items.SPLASH_POTION;
         ItemStack potionStack = new ItemStack(item);
         
@@ -77,11 +89,7 @@ public class PotionCauldronBlockEntity extends BlockEntity {
                 .toList();
         Potion potion = potions.get(random.nextInt(potions.size()));
         
-        this.potionStack = PotionUtils.setPotion(potionStack, potion);
-    }
-    
-    public ItemStack createPickupStack() {
-        return this.potionStack.copyWithCount(1);
+        return PotionUtils.setPotion(potionStack, potion);
     }
     
     public boolean potionStackEquals(ItemStack stack) {
