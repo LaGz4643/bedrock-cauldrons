@@ -35,12 +35,12 @@ public abstract class SwampHutPieceMixin extends ScatteredFeaturePiece {
     
     @Inject(method = "<init>(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("TAIL"))
     private void onLoad(CompoundTag tag, CallbackInfo ci) {
-        this.bedrock_cauldrons$placedCauldron = tag.getBoolean("bedrock_cauldrons_placed_cauldron");
+        this.bedrock_cauldrons$placedCauldron = tag.getBoolean("bedrock_cauldrons:placed_cauldron");
     }
     
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void onSave(StructurePieceSerializationContext context, CompoundTag tag, CallbackInfo ci) {
-        tag.putBoolean("bedrock_cauldrons_placed_cauldron", this.bedrock_cauldrons$placedCauldron);
+        tag.putBoolean("bedrock_cauldrons:placed_cauldron", this.bedrock_cauldrons$placedCauldron);
     }
     
     @Redirect(method = "postProcess", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/levelgen/structure/structures/SwampHutPiece;placeBlock(Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/world/level/block/state/BlockState;IIILnet/minecraft/world/level/levelgen/structure/BoundingBox;)V", ordinal = 7))
