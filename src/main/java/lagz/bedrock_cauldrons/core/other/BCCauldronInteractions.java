@@ -210,6 +210,53 @@ public class BCCauldronInteractions {
         POTION.put(Items.POTION, FILL_POTION);
         POTION.put(Items.SPLASH_POTION, FILL_POTION);
         POTION.put(Items.LINGERING_POTION, FILL_POTION);
+        POTION.put(Items.ARROW, (state, level, pos, player, hand, stack) -> {
+            if (level.getBlockEntity(pos) instanceof PotionCauldronBlockEntity entity) {
+                if (!level.isClientSide) {
+                    Item item = stack.getItem();
+                    
+                    int maxTippedArrows = switch (state.getValue(LayeredCauldronBlock.LEVEL)) {
+                        case 2 -> 32;
+                        case 3 -> 64;
+                        default -> 16;
+                    };
+                    int tippedArrowCount = Math.min(stack.getCount(), maxTippedArrows);
+                    ItemStack tippedArrowStack = PotionUtils.setPotion(new ItemStack(Items.TIPPED_ARROW, tippedArrowCount), entity.getPotion());
+                    
+                    if (!player.getAbilities().instabuild) {
+                        stack.shrink(tippedArrowCount);
+                    }
+                    
+                    if (stack.isEmpty()) {
+                        player.setItemInHand(hand, tippedArrowStack);
+                    } else if (!player.getInventory().add(tippedArrowStack)) {
+                        player.drop(tippedArrowStack, false);
+                    }
+                    
+                    for (int i = 0; i < tippedArrowCount; i++) {
+                        player.awardStat(Stats.ITEM_USED.get(item));
+                    }
+                    
+                    int levelsUsed;
+                    if (tippedArrowCount <= 16) {
+                        levelsUsed = 1;
+                    } else if (tippedArrowCount <= 32) {
+                        levelsUsed = 2;
+                    } else {
+                        levelsUsed = 3;
+                    }
+                    BedrockCauldronBlock.lowerFillLevelBy(state, level, pos, levelsUsed);
+                    
+                    level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    if (entity.getPotion() != Potions.WATER) {
+                        BCNetworking.sendAddPotionCauldronInteractParticlesMessage(level, pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(level.getBlockState(pos)));
+                    }
+                }
+                
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            return InteractionResult.PASS;
+        });
     }
     
     
