@@ -1,4 +1,4 @@
-package lagz.bedrock_cauldrons.core.mixin;
+package lagz.bedrock_cauldrons.core.mixin.client;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.TerrainParticle;

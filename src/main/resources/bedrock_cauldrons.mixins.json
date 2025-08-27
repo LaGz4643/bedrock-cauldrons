@@ -9,7 +9,7 @@
     "SwampHutPieceMixin"
   ],
   "client": [
-    "TerrainParticleMixin"
+    "client.TerrainParticleMixin"
   ],
   "server": [
   ],
