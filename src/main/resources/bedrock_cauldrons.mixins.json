@@ -5,6 +5,7 @@
   "minVersion": "0.8",
   "refmap": "bedrock_cauldrons.refmap.json",
   "mixins": [
+    "PoiTypesMixin",
     "SwampHutPieceMixin"
   ],
   "client": [
