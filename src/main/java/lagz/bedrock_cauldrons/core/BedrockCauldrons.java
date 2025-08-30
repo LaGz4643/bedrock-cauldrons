@@ -32,14 +32,12 @@ public class BedrockCauldrons {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            BCCauldronInteractions.registerCauldronInteractions();
-        });
+        event.enqueueWork(BCCauldronInteractions::registerCauldronInteractions);
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-//            ItemBlockRenderTypes.setRenderLayer(Blocks.WATER_CAULDRON, RenderType.tripwire());
+        
         });
     }
 

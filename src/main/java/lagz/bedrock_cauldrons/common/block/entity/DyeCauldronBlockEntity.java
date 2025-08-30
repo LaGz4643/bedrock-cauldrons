@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -55,7 +56,10 @@ public class DyeCauldronBlockEntity extends BlockEntity {
     
     public void mixColor(int color) {
         this.setColor(ColorUtil.averageIntColors(this.color, color));
-        this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_CLIENTS);
+        
+        Level level = this.getLevel();
+        assert level != null : "Level should never be null when a player is interacting with blockentity";
+        level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_CLIENTS);
     }
     
     public void mixDye(DyeItem dyeitem) {
@@ -69,8 +73,11 @@ public class DyeCauldronBlockEntity extends BlockEntity {
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         super.onDataPacket(net, pkt);
-        if (this.getLevel().isClientSide) {
-            this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_CLIENTS);
+        
+        Level level = this.getLevel();
+        assert level != null : "Level should never be null when a blockentity is receiving a data packet";
+        if (level.isClientSide) {
+            level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_CLIENTS);
         }
     }
 }

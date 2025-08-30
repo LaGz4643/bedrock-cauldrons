@@ -12,7 +12,7 @@ public class ColorUtil {
         float[] floatColor = new float[3];
         floatColor[0] = ((color & 16711680) >> 16) / 255.0F;
         floatColor[1] = ((color & '\uff00') >> 8) / 255.0F;
-        floatColor[2] = ((color & 255) >> 0) / 255.0F;
+        floatColor[2] = (color & 255) / 255.0F;
         return floatColor;
     }
     

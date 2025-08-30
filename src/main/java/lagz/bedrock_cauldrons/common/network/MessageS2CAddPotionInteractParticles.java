@@ -8,18 +8,18 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class MessageS2CAddPotionCauldronInteractParticles {
+public class MessageS2CAddPotionInteractParticles {
     private final BlockPos blockpos;
     private final int potionColor;
     private final double contentHeight;
     
-    public MessageS2CAddPotionCauldronInteractParticles(BlockPos blockpos, int potionColor, double contentHeight) {
+    public MessageS2CAddPotionInteractParticles(BlockPos blockpos, int potionColor, double contentHeight) {
         this.blockpos = blockpos;
         this.potionColor = potionColor;
         this.contentHeight = contentHeight;
     }
     
-    public MessageS2CAddPotionCauldronInteractParticles(FriendlyByteBuf buf) {
+    public MessageS2CAddPotionInteractParticles(FriendlyByteBuf buf) {
         this(buf.readBlockPos(), buf.readInt(), buf.readDouble());
     }
     
@@ -41,10 +41,10 @@ public class MessageS2CAddPotionCauldronInteractParticles {
         return this.contentHeight;
     }
     
-    public static void handle(MessageS2CAddPotionCauldronInteractParticles message, Supplier<NetworkEvent.Context> ctx) {
+    public static void handle(MessageS2CAddPotionInteractParticles message, Supplier<NetworkEvent.Context> ctx) {
         NetworkEvent.Context context = ctx.get();
         if (context.getDirection().getReceptionSide() == LogicalSide.CLIENT) {
-            context.enqueueWork(() -> ClientMessageHandler.handleAddCauldronInteractParticles(message, context));
+            context.enqueueWork(() -> ClientMessageHandler.handleAddPotionInteractParticles(message));
             context.setPacketHandled(true);
         }
     }

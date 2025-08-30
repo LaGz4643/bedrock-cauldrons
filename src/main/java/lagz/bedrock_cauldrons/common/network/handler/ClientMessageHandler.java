@@ -1,18 +1,18 @@
 package lagz.bedrock_cauldrons.common.network.handler;
 
-import lagz.bedrock_cauldrons.common.network.MessageS2CAddPotionCauldronInteractParticles;
+import lagz.bedrock_cauldrons.common.network.MessageS2CAddPotionInteractParticles;
 import lagz.bedrock_cauldrons.core.util.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraftforge.network.NetworkEvent;
 
 public class ClientMessageHandler {
     
-    public static void handleAddCauldronInteractParticles(MessageS2CAddPotionCauldronInteractParticles message, NetworkEvent.Context context) {
+    public static void handleAddPotionInteractParticles(MessageS2CAddPotionInteractParticles message) {
         ClientLevel level = Minecraft.getInstance().level;
         BlockPos blockpos = message.getBlockPos();
+        assert level != null : "Level should never be null when handling messages";
         
         float[] color = ColorUtil.intColorToFloatColor(message.getPotionColor());
         for (int i = 0; i < 5; i++) {
