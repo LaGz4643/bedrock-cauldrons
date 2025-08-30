@@ -1,8 +1,10 @@
 package lagz.bedrock_cauldrons.common.block.entity;
 
 import lagz.bedrock_cauldrons.core.registry.BCBlockEntityTypes;
+import lagz.bedrock_cauldrons.core.util.TagUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.RandomSource;
@@ -19,7 +21,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Supplier;
 
 public class PotionCauldronBlockEntity extends BlockEntity {
@@ -66,8 +67,20 @@ public class PotionCauldronBlockEntity extends BlockEntity {
         this.setChanged();
     }
     
-    public void initPotionStack(ItemStack stack) {
-        this.setPotionStack(stack.copyWithCount(1));
+    public void initPotionStack(ItemStack initStack) {
+        ItemStack setStack = PotionUtils.setPotion(new ItemStack(initStack.getItem()), PotionUtils.getPotion(initStack));
+        
+        CompoundTag initTag = initStack.getTag();
+        if (initTag != null) {
+            if (initTag.contains(PotionUtils.TAG_CUSTOM_POTION_COLOR, Tag.TAG_ANY_NUMERIC)) {
+                setStack.getOrCreateTag().putInt(PotionUtils.TAG_CUSTOM_POTION_COLOR, initTag.getInt(PotionUtils.TAG_CUSTOM_POTION_COLOR));
+            }
+            if (initTag.contains(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_LIST)) {
+                setStack.getOrCreateTag().put(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, initTag.getList(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_COMPOUND));
+            }
+        }
+        
+        this.setPotionStack(setStack);
     }
     
     public void initRandomSwampHutPotionStack(RandomSource random) {
@@ -94,7 +107,14 @@ public class PotionCauldronBlockEntity extends BlockEntity {
     
     public boolean potionStackEquals(ItemStack stack) {
         if (this.potionStack.is(stack.getItem())) {
-            return Objects.equals(this.potionStack.getTag(), stack.getTag());
+            if (this.getPotion() == PotionUtils.getPotion(stack)) {
+                CompoundTag thisTag = this.potionStack.getTag();
+                CompoundTag otherTag = stack.getTag();
+                
+                if (TagUtil.tagsContainEqualIntTag(thisTag, otherTag, PotionUtils.TAG_CUSTOM_POTION_COLOR)) {
+                    return TagUtil.tagsContainEqualListTag(thisTag, otherTag, PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_COMPOUND);
+                }
+            }
         }
         return false;
     }
