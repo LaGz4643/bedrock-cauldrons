@@ -1,5 +1,6 @@
 package lagz.bedrock_cauldrons.core.networking;
 
+import lagz.bedrock_cauldrons.common.network.MessageS2CAddPotionEvaporateParticles;
 import lagz.bedrock_cauldrons.common.network.MessageS2CAddPotionInteractParticles;
 import lagz.bedrock_cauldrons.core.BedrockCauldrons;
 import net.minecraft.core.BlockPos;
@@ -21,9 +22,14 @@ public class BCNetworking {
         int id = -1;
         
         CHANNEL.registerMessage(++id, MessageS2CAddPotionInteractParticles.class, MessageS2CAddPotionInteractParticles::write, MessageS2CAddPotionInteractParticles::new, MessageS2CAddPotionInteractParticles::handle);
+        CHANNEL.registerMessage(++id, MessageS2CAddPotionEvaporateParticles.class, MessageS2CAddPotionEvaporateParticles::write, MessageS2CAddPotionEvaporateParticles::new, MessageS2CAddPotionEvaporateParticles::handle);
     }
     
     public static void sendAddPotionInteractParticlesMessage(Level level, BlockPos blockpos, int potionColor, double contentHeight) {
         CHANNEL.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockpos)), new MessageS2CAddPotionInteractParticles(blockpos, potionColor, contentHeight));
+    }
+    
+    public static void sendAddPotionEvaporateParticlesMessage(Level level, BlockPos blockpos) {
+        CHANNEL.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(blockpos)), new MessageS2CAddPotionEvaporateParticles(blockpos));
     }
 }

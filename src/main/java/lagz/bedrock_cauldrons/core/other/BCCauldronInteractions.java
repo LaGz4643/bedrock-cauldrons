@@ -7,8 +7,6 @@ import lagz.bedrock_cauldrons.core.networking.BCNetworking;
 import lagz.bedrock_cauldrons.core.registry.BCBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -47,9 +45,7 @@ public class BCCauldronInteractions {
             level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
             level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
-            for (int i = 0; i < 8; ++i) {
-                ((ServerLevel) level).sendParticles(ParticleTypes.POOF, (pos.getX() + 0.5D) + (level.getRandom().nextDouble() - 0.5D) * 0.625D, pos.getY() + 5.0D / 16.0D, (pos.getZ() + 0.5D) + (level.getRandom().nextDouble() - 0.5D) * 0.625D, 1, 0.0D, 0.0D, 0.0D, 0.0D);
-            }
+            BCNetworking.sendAddPotionEvaporateParticlesMessage(level, pos);
         }
         
         return InteractionResult.sidedSuccess(level.isClientSide);

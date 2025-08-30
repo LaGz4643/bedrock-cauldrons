@@ -8,22 +8,20 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public record MessageS2CAddPotionInteractParticles(BlockPos blockpos, int potionColor, double contentHeight) {
+public record MessageS2CAddPotionEvaporateParticles(BlockPos blockpos) {
     
-    public MessageS2CAddPotionInteractParticles(FriendlyByteBuf buf) {
-        this(buf.readBlockPos(), buf.readInt(), buf.readDouble());
+    public MessageS2CAddPotionEvaporateParticles(FriendlyByteBuf buf) {
+        this(buf.readBlockPos());
     }
     
     public void write(FriendlyByteBuf buf) {
         buf.writeBlockPos(this.blockpos);
-        buf.writeInt(this.potionColor);
-        buf.writeDouble(this.contentHeight);
     }
     
-    public static void handle(MessageS2CAddPotionInteractParticles message, Supplier<NetworkEvent.Context> ctx) {
+    public static void handle(MessageS2CAddPotionEvaporateParticles message, Supplier<NetworkEvent.Context> ctx) {
         NetworkEvent.Context context = ctx.get();
         if (context.getDirection().getReceptionSide() == LogicalSide.CLIENT) {
-            context.enqueueWork(() -> ClientMessageHandler.handleAddPotionInteractParticles(message));
+            context.enqueueWork(() -> ClientMessageHandler.handleAddPotionEvaporateParticles(message));
             context.setPacketHandled(true);
         }
     }
