@@ -12,7 +12,6 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 
 public class PotionCauldronBlock extends BedrockCauldronBlock {
     public PotionCauldronBlock(Properties properties) {
@@ -28,7 +27,7 @@ public class PotionCauldronBlock extends BedrockCauldronBlock {
     }
     
     @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new PotionCauldronBlockEntity(pos, state);
     }
     
