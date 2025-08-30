@@ -1,0 +1,8 @@
+{
+  "block.potion_cauldron.potion_evaporate": {
+    "sounds": [
+      "random/fizz"
+    ],
+    "subtitle": "subtitles.bedrock_cauldrons.block.potion_cauldron.potion_evaporate"
+  }
+}

@@ -4,6 +4,7 @@ import lagz.bedrock_cauldrons.core.networking.BCNetworking;
 import lagz.bedrock_cauldrons.core.other.BCCauldronInteractions;
 import lagz.bedrock_cauldrons.core.registry.BCBlockEntityTypes;
 import lagz.bedrock_cauldrons.core.registry.BCBlocks;
+import lagz.bedrock_cauldrons.core.registry.BCSoundEvents;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -21,6 +22,7 @@ public class BedrockCauldrons {
 
         BCBlocks.BLOCKS.register(modEventBus);
         BCBlockEntityTypes.BLOCK_ENTITY_TYPES.register(modEventBus);
+        BCSoundEvents.SOUND_EVENTS.register(modEventBus);
         
         BCNetworking.registerMessages();
 

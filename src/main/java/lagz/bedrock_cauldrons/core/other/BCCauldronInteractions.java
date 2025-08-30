@@ -5,6 +5,7 @@ import lagz.bedrock_cauldrons.common.block.entity.DyeCauldronBlockEntity;
 import lagz.bedrock_cauldrons.common.block.entity.PotionCauldronBlockEntity;
 import lagz.bedrock_cauldrons.core.networking.BCNetworking;
 import lagz.bedrock_cauldrons.core.registry.BCBlocks;
+import lagz.bedrock_cauldrons.core.registry.BCSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.sounds.SoundEvents;
@@ -43,7 +44,7 @@ public class BCCauldronInteractions {
             player.awardStat(Stats.ITEM_USED.get(item));
             level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState());
             level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-            level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
+            level.playSound(null, pos, BCSoundEvents.POTION_EVAPORATE.get(), SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
             level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
             BCNetworking.sendAddPotionEvaporateParticlesMessage(level, pos);
         }
