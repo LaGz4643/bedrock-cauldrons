@@ -230,9 +230,7 @@ public class BCCauldronInteractions {
                         player.drop(tippedArrowStack, false);
                     }
                     
-                    for (int i = 0; i < tippedArrowCount; i++) {
-                        player.awardStat(Stats.ITEM_USED.get(item));
-                    }
+                    player.awardStat(Stats.ITEM_USED.get(item), tippedArrowCount);
                     
                     int levelsUsed;
                     if (tippedArrowCount <= 16) {
