@@ -107,7 +107,7 @@ public class BCCauldronInteractions {
     
     private static void registerVanillaCauldronInteractions() {
         CauldronInteraction.EMPTY.put(Items.POTION, (state, level, pos, player, hand, stack) -> {
-            if (PotionUtils.getPotion(stack) != Potions.WATER) {
+            if (PotionUtils.getPotion(stack) != Potions.WATER || PotionCauldronBlockEntity.hasCustomEffectsOrColor(stack)) {
                 // Custom behavior
                 return EMPTY_FILL_POTION.interact(state, level, pos, player, hand, stack);
             } else {
@@ -130,7 +130,7 @@ public class BCCauldronInteractions {
         
         CauldronInteraction.WATER.put(Items.POTION, (state, level, pos, player, hand, stack) -> {
             if (state.getValue(LayeredCauldronBlock.LEVEL) != 3) {
-                if (PotionUtils.getPotion(stack) == Potions.WATER) {
+                if (PotionUtils.getPotion(stack) == Potions.WATER && !PotionCauldronBlockEntity.hasCustomEffectsOrColor(stack)) {
                     // Vanilla behavior
                     if (!level.isClientSide) {
                         player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
@@ -296,7 +296,7 @@ public class BCCauldronInteractions {
     
     public static final CauldronInteraction DYE_FILL_POTION = (state, level, pos, player, hand, stack) -> {
         if (state.getValue(LayeredCauldronBlock.LEVEL) != 3) {
-            if (stack.is(Items.POTION) && PotionUtils.getPotion(stack) == Potions.WATER) {
+            if (stack.is(Items.POTION) && PotionUtils.getPotion(stack) == Potions.WATER && !PotionCauldronBlockEntity.hasCustomEffectsOrColor(stack)) {
                 if (!level.isClientSide) {
                     Item item = stack.getItem();
                     player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.GLASS_BOTTLE)));

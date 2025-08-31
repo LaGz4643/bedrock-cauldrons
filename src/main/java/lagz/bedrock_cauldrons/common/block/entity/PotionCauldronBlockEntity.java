@@ -80,6 +80,21 @@ public class PotionCauldronBlockEntity extends BlockEntity {
         return true;
     }
     
+    public static boolean hasCustomEffectsOrColor(ItemStack itemstack) {
+        CompoundTag tag = itemstack.getTag();
+        if (tag == null) {
+            return false;
+        }
+        
+        if (tag.contains(PotionUtils.TAG_CUSTOM_POTION_COLOR, Tag.TAG_ANY_NUMERIC)) {
+            return true;
+        }
+        if (tag.contains(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_LIST)) {
+            return !tag.getList(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_COMPOUND).isEmpty();
+        }
+        return false;
+    }
+    
     public boolean isWaterWithoutEffects() {
         return this.getPotion() == Potions.WATER && PotionUtils.getMobEffects(this.potionStack).isEmpty();
     }
