@@ -60,7 +60,7 @@ public class BCCauldronInteractions {
             level.setBlockAndUpdate(pos, placeBlockState);
             if (level.getBlockEntity(pos) instanceof PotionCauldronBlockEntity entity) {
                 entity.initPotionStack(stack);
-                if (entity.getPotion() != Potions.WATER) {
+                if (entity.hasParticles()) {
                     BCNetworking.sendAddPotionInteractParticlesMessage(level, pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(placeBlockState));
                 }
             }
@@ -170,7 +170,7 @@ public class BCCauldronInteractions {
                     level.setBlockAndUpdate(pos, placeBlockState);
                     level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                     level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
-                    if (entity.getPotion() != Potions.WATER) {
+                    if (entity.hasParticles()) {
                         BCNetworking.sendAddPotionInteractParticlesMessage(level, pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(placeBlockState));
                     }
                 }
@@ -195,7 +195,7 @@ public class BCCauldronInteractions {
                     LayeredCauldronBlock.lowerFillLevel(state, level, pos);
                     level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                     level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
-                    if (entity.getPotion() != Potions.WATER) {
+                    if (entity.hasParticles()) {
                         BCNetworking.sendAddPotionInteractParticlesMessage(level, pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(level.getBlockState(pos)));
                     }
                 }
@@ -243,7 +243,7 @@ public class BCCauldronInteractions {
                     BedrockCauldronBlock.lowerFillLevelBy(state, level, pos, levelsUsed);
                     
                     level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    if (entity.getPotion() != Potions.WATER) {
+                    if (entity.hasParticles()) {
                         BCNetworking.sendAddPotionInteractParticlesMessage(level, pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(level.getBlockState(pos)));
                     }
                 }

@@ -63,6 +63,27 @@ public class PotionCauldronBlockEntity extends BlockEntity {
         return PotionUtils.getColor(this.potionStack);
     }
     
+    public boolean isUncoloredWater() {
+        if (this.getPotion() != Potions.WATER) {
+            return false;
+        }
+        
+        CompoundTag tag = this.potionStack.getTag();
+        if (tag != null) {
+            if (tag.contains(PotionUtils.TAG_CUSTOM_POTION_COLOR, Tag.TAG_ANY_NUMERIC)) {
+                return false;
+            }
+            if (tag.contains(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_LIST)) {
+                return tag.getList(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_COMPOUND).isEmpty();
+            }
+        }
+        return true;
+    }
+    
+    public boolean hasParticles() {
+        return !(this.getPotion() == Potions.WATER && PotionUtils.getMobEffects(this.potionStack).isEmpty());
+    }
+    
     private void setPotionStack(ItemStack stack) {
         this.potionStack = stack;
         this.setChanged();

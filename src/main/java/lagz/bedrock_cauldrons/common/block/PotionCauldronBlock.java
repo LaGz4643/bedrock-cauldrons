@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -20,7 +19,7 @@ public class PotionCauldronBlock extends BedrockCauldronBlock {
     
     @Override
     public int getColor(BlockAndTintGetter blockGetter, BlockPos pos) {
-        if (blockGetter.getBlockEntity(pos) instanceof PotionCauldronBlockEntity entity && entity.getPotion() != Potions.WATER) {
+        if (blockGetter.getBlockEntity(pos) instanceof PotionCauldronBlockEntity entity && !entity.isUncoloredWater()) {
             return entity.getPotionColor();
         }
         return BiomeColors.getAverageWaterColor(blockGetter, pos);
@@ -33,7 +32,7 @@ public class PotionCauldronBlock extends BedrockCauldronBlock {
     
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource randomSource) {
-        if (randomSource.nextInt(8) == 0 && level.getBlockEntity(pos) instanceof PotionCauldronBlockEntity entity && entity.getPotion() != Potions.WATER) {
+        if (level.getBlockEntity(pos) instanceof PotionCauldronBlockEntity entity && entity.hasParticles() && randomSource.nextInt(8) == 0) {
             float[] color = ColorUtil.intColorToFloatColor(entity.getPotionColor());
             level.addParticle(ParticleTypes.ENTITY_EFFECT, pos.getX() + 0.5D + (randomSource.nextDouble() - 0.5D) * 0.625D, pos.getY() + this.getContentHeight(state) + 4.0D / 16.0D, pos.getZ() + 0.5D + (randomSource.nextDouble() - 0.5D) * 0.625D, color[0], color[1], color[2]);
         }
