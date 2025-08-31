@@ -117,7 +117,7 @@ public class PotionCauldronBlockEntity extends BlockEntity {
                 setStack.getOrCreateTag().putInt(PotionUtils.TAG_CUSTOM_POTION_COLOR, initTag.getInt(PotionUtils.TAG_CUSTOM_POTION_COLOR));
             }
             if (initTag.contains(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_LIST)) {
-                setStack.getOrCreateTag().put(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, initTag.getList(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_COMPOUND));
+                setStack.getOrCreateTag().put(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, initTag.getList(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_COMPOUND).copy());
             }
         }
         
