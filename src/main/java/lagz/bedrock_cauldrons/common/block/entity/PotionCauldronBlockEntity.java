@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -67,6 +68,11 @@ public class PotionCauldronBlockEntity extends BlockEntity {
     
     public int getPotionColor() {
         return PotionUtils.getColor(this.potionStack);
+    }
+    
+    @Nullable
+    public CompoundTag getPotionTag() {
+        return this.potionStack.getTag();
     }
     
     public boolean isUncoloredWater() {

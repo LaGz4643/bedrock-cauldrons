@@ -8,6 +8,9 @@ import lagz.bedrock_cauldrons.core.registry.BCBlocks;
 import lagz.bedrock_cauldrons.core.registry.BCSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -219,6 +222,19 @@ public class BCCauldronInteractions {
                     };
                     int tippedArrowCount = Math.min(stack.getCount(), maxTippedArrows);
                     ItemStack tippedArrowStack = PotionUtils.setPotion(new ItemStack(Items.TIPPED_ARROW, tippedArrowCount), entity.getPotion());
+                    
+                    CompoundTag potionTag = entity.getPotionTag();
+                    if (potionTag != null) {
+                        if (potionTag.contains(PotionUtils.TAG_CUSTOM_POTION_COLOR, Tag.TAG_ANY_NUMERIC)) {
+                            tippedArrowStack.getOrCreateTag().putInt(PotionUtils.TAG_CUSTOM_POTION_COLOR, potionTag.getInt(PotionUtils.TAG_CUSTOM_POTION_COLOR));
+                        }
+                        if (potionTag.contains(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_LIST)) {
+                            ListTag customEffects = potionTag.getList(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_COMPOUND);
+                            if (!customEffects.isEmpty()) {
+                                tippedArrowStack.getOrCreateTag().put(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, customEffects.copy());
+                            }
+                        }
+                    }
                     
                     if (!player.getAbilities().instabuild) {
                         stack.shrink(tippedArrowCount);
