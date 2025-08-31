@@ -109,7 +109,7 @@ public class PotionCauldronBlockEntity extends BlockEntity {
         return !this.isWaterWithoutEffects();
     }
     
-    private void setPotionStack(ItemStack stack) {
+    protected void setPotionStack(ItemStack stack) {
         this.potionStack = stack;
         this.setChanged();
     }
