@@ -53,7 +53,12 @@ public class PotionCauldronBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        this.potionStack = tag.contains("potion", CompoundTag.TAG_COMPOUND) ? ItemStack.of(tag.getCompound("potion")) : DEFAULT_POTION_STACK.get();
+        if (tag.contains("potion", Tag.TAG_COMPOUND)) {
+            ItemStack itemstack = ItemStack.of(tag.getCompound("potion"));
+            if (!itemstack.isEmpty()) {
+                this.potionStack = itemstack;
+            }
+        }
     }
     
     public Potion getPotion() {
