@@ -80,8 +80,12 @@ public class PotionCauldronBlockEntity extends BlockEntity {
         return true;
     }
     
+    public boolean isWaterWithoutEffects() {
+        return this.getPotion() == Potions.WATER && PotionUtils.getMobEffects(this.potionStack).isEmpty();
+    }
+    
     public boolean hasParticles() {
-        return !(this.getPotion() == Potions.WATER && PotionUtils.getMobEffects(this.potionStack).isEmpty());
+        return !this.isWaterWithoutEffects();
     }
     
     private void setPotionStack(ItemStack stack) {

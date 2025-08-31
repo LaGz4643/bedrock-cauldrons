@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -23,6 +24,13 @@ public class PotionCauldronBlock extends BedrockCauldronBlock {
             return entity.getPotionColor();
         }
         return BiomeColors.getAverageWaterColor(blockGetter, pos);
+    }
+    
+    @Override
+    public void entityInside(BlockState blockstate, Level level, BlockPos blockpos, Entity entity) {
+        if (!level.isClientSide && level.getBlockEntity(blockpos) instanceof PotionCauldronBlockEntity blockentity && blockentity.isWaterWithoutEffects()) {
+            super.entityInside(blockstate, level, blockpos, entity);
+        }
     }
     
     @Override
