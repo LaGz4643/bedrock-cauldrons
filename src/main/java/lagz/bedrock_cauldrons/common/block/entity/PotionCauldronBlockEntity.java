@@ -4,6 +4,7 @@ import lagz.bedrock_cauldrons.core.registry.BCBlockEntityTypes;
 import lagz.bedrock_cauldrons.core.util.TagUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -117,7 +118,10 @@ public class PotionCauldronBlockEntity extends BlockEntity {
                 setStack.getOrCreateTag().putInt(PotionUtils.TAG_CUSTOM_POTION_COLOR, initTag.getInt(PotionUtils.TAG_CUSTOM_POTION_COLOR));
             }
             if (initTag.contains(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_LIST)) {
-                setStack.getOrCreateTag().put(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, initTag.getList(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_COMPOUND).copy());
+                ListTag customEffects = initTag.getList(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_COMPOUND);
+                if (!customEffects.isEmpty()) {
+                    setStack.getOrCreateTag().put(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, customEffects.copy());
+                }
             }
         }
         
