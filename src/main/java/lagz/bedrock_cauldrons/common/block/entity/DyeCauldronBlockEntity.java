@@ -50,24 +50,28 @@ public class DyeCauldronBlockEntity extends BlockEntity {
         this.setChanged();
     }
     
-    public void setColorFromDye(DyeItem dyeitem) {
+    public void setColor(DyeItem dyeitem) {
         this.setColor(ColorUtil.getDyeColor(dyeitem));
     }
     
-    public void mixColor(int color) {
-        this.setColor(ColorUtil.averageIntColors(this.color, color));
+    public void setColorAndUpdate(int color) {
+        this.setColor(color);
         
         Level level = this.getLevel();
         assert level != null : "Level should never be null when a player is interacting with blockentity";
         level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_CLIENTS);
     }
     
-    public void mixDye(DyeItem dyeitem) {
-        this.mixColor(ColorUtil.getDyeColor(dyeitem));
+    public boolean isSameColor(int color) {
+        return this.color == color;
     }
     
-    public boolean isDyeColor(DyeItem dyeitem) {
-        return ColorUtil.getDyeColor(dyeitem) == this.color;
+    public boolean isSameColor(DyeItem dyeitem) {
+        return this.isSameColor(ColorUtil.getDyeColor(dyeitem));
+    }
+    
+    public int getColorMixResult(DyeItem dyeitem) {
+        return ColorUtil.averageIntColors(this.color, ColorUtil.getDyeColor(dyeitem));
     }
     
     @Override

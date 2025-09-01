@@ -96,7 +96,7 @@ public class BCCauldronInteractions {
                 int waterLevel = state.getValue(LayeredCauldronBlock.LEVEL);
                 level.setBlockAndUpdate(pos, BCBlocks.DYE_CAULDRON.get().defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, waterLevel));
                 if (level.getBlockEntity(pos) instanceof DyeCauldronBlockEntity entity) {
-                    entity.setColorFromDye(dyeitem);
+                    entity.setColor(dyeitem);
                 }
                 
                 level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -274,21 +274,24 @@ public class BCCauldronInteractions {
     public static final CauldronInteraction MIX_DYE = (state, level, pos, player, hand, stack) -> {
         Item item = stack.getItem();
         if (item instanceof DyeItem dyeitem) {
-            if (level.getBlockEntity(pos) instanceof DyeCauldronBlockEntity entity && !entity.isDyeColor(dyeitem)) {
-                if (!level.isClientSide) {
-                    if (!player.getAbilities().instabuild) {
-                        stack.shrink(1);
+            if (level.getBlockEntity(pos) instanceof DyeCauldronBlockEntity entity) {
+                int resultColor = entity.getColorMixResult(dyeitem);
+                if (!entity.isSameColor(dyeitem) && !entity.isSameColor(resultColor)) {
+                    if (!level.isClientSide) {
+                        if (!player.getAbilities().instabuild) {
+                            stack.shrink(1);
+                        }
+                        player.awardStat(Stats.USE_CAULDRON);
+                        player.awardStat(Stats.ITEM_USED.get(item));
+                        
+                        entity.setColorAndUpdate(resultColor);
+                        
+                        level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
                     }
-                    player.awardStat(Stats.USE_CAULDRON);
-                    player.awardStat(Stats.ITEM_USED.get(item));
                     
-                    entity.mixDye(dyeitem);
-                    
-                    level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
+                    return InteractionResult.sidedSuccess(level.isClientSide);
                 }
-                
-                return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
         return InteractionResult.PASS;
