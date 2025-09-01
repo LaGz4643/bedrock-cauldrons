@@ -1,3 +1,6 @@
 {
-  "subtitles.bedrock_cauldrons.block.potion_cauldron.potion_evaporate": "Potion evaporates"
+  "subtitles.bedrock_cauldrons.block.potion_cauldron.potion_evaporate": "Potion fizzes",
+  "subtitles.bedrock_cauldrons.block.dye_cauldron.dye_water": "Dye splashes",
+  "subtitles.bedrock_cauldrons.block.dye_cauldron.dye_item": "Dyed Water soaks",
+  "subtitles.bedrock_cauldrons.block.potion_cauldron.tip_arrows": "Potion tips"
 }

@@ -1,8 +1,59 @@
 {
+  "block.dye_cauldron.dye_water": {
+    "sounds": [
+      {
+        "name": "block/cauldron/dye1",
+        "volume": 0.9
+      },
+      {
+        "name": "block/cauldron/dye2",
+        "volume": 0.9
+      },
+      {
+        "name": "block/cauldron/dye3",
+        "volume": 0.9
+      }
+    ],
+    "subtitle": "subtitles.bedrock_cauldrons.block.dye_cauldron.dye_water"
+  },
+  "block.dye_cauldron.dye_item": {
+    "sounds": [
+      {
+        "name": "block/cauldron/dye1",
+        "volume": 0.9
+      },
+      {
+        "name": "block/cauldron/dye2",
+        "volume": 0.9
+      },
+      {
+        "name": "block/cauldron/dye3",
+        "volume": 0.9
+      }
+    ],
+    "subtitle": "subtitles.bedrock_cauldrons.block.dye_cauldron.dye_item"
+  },
   "block.potion_cauldron.potion_evaporate": {
     "sounds": [
       "random/fizz"
     ],
     "subtitle": "subtitles.bedrock_cauldrons.block.potion_cauldron.potion_evaporate"
+  },
+  "block.potion_cauldron.tip_arrows": {
+    "sounds": [
+      {
+        "name": "block/cauldron/dye1",
+        "volume": 0.9
+      },
+      {
+        "name": "block/cauldron/dye2",
+        "volume": 0.9
+      },
+      {
+        "name": "block/cauldron/dye3",
+        "volume": 0.9
+      }
+    ],
+    "subtitle": "subtitles.bedrock_cauldrons.block.potion_cauldron.tip_arrows"
   }
 }

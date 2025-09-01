@@ -99,7 +99,7 @@ public class BCCauldronInteractions {
                     entity.setColor(dyeitem);
                 }
                 
-                level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, BCSoundEvents.DYE_WATER.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
             }
             
@@ -258,7 +258,7 @@ public class BCCauldronInteractions {
                     }
                     BedrockCauldronBlock.lowerFillLevelBy(state, level, pos, levelsUsed);
                     
-                    level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    level.playSound(null, pos, BCSoundEvents.TIP_ARROWS.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
                     if (entity.hasParticles()) {
                         BCNetworking.sendAddPotionInteractParticlesMessage(level, pos, entity.getPotionColor(), BedrockCauldronBlock.getCauldronContentHeight(level.getBlockState(pos)));
                     }
@@ -286,7 +286,7 @@ public class BCCauldronInteractions {
                         
                         entity.setColorAndUpdate(resultColor);
                         
-                        level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        level.playSound(null, pos, BCSoundEvents.DYE_WATER.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
                         level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
                     }
                     
@@ -305,7 +305,7 @@ public class BCCauldronInteractions {
                 player.awardStat(Stats.USE_CAULDRON);
                 player.awardStat(Stats.ITEM_USED.get(item));
                 LayeredCauldronBlock.lowerFillLevel(state, level, pos);
-                level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, BCSoundEvents.DYE_ITEM.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             }
             
             return InteractionResult.sidedSuccess(level.isClientSide);
