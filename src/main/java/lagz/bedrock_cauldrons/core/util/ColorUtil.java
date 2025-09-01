@@ -29,11 +29,11 @@ public class ColorUtil {
         int addedMaxColor = 0;
         int colorCount = colors.length;
         
+        if (colorCount == 2 && colors[0] == -1) {
+            return colors[1];
+        }
+        
         for (int color : colors) {
-            if (color == -1) {
-                return -1;
-            }
-            
             int r = color >> 16 & 255;
             int g = color >> 8 & 255;
             int b = color & 255;
