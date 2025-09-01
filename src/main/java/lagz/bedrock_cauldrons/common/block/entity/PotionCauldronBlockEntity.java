@@ -57,6 +57,7 @@ public class PotionCauldronBlockEntity extends BlockEntity {
         if (tag.contains("potion", Tag.TAG_COMPOUND)) {
             ItemStack itemstack = ItemStack.of(tag.getCompound("potion"));
             if (!itemstack.isEmpty()) {
+                removeEmptyCustomPotionEffects(itemstack);
                 this.potionStack = itemstack;
             }
         }
@@ -90,6 +91,17 @@ public class PotionCauldronBlockEntity extends BlockEntity {
             }
         }
         return true;
+    }
+    
+    public static void removeEmptyCustomPotionEffects(ItemStack itemstack) {
+        CompoundTag tag = itemstack.getTag();
+        if (tag != null) {
+            if (tag.contains(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_LIST)) {
+                if (tag.getList(PotionUtils.TAG_CUSTOM_POTION_EFFECTS, Tag.TAG_COMPOUND).isEmpty()) {
+                    tag.remove(PotionUtils.TAG_CUSTOM_POTION_EFFECTS);
+                }
+            }
+        }
     }
     
     public static boolean hasCustomEffectsOrColor(ItemStack itemstack) {
@@ -144,7 +156,9 @@ public class PotionCauldronBlockEntity extends BlockEntity {
     }
     
     public ItemStack createPickupStack() {
-        return this.potionStack.copyWithCount(1);
+        ItemStack pickupStack = this.potionStack.copyWithCount(1);
+        removeEmptyCustomPotionEffects(pickupStack);
+        return pickupStack;
     }
     
     public static ItemStack createRandomSwampHutPotionStack(RandomSource random) {
